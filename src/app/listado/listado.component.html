@@ -1,18 +1,25 @@
-<h2 class="mt-3">Mensajes</h2>
 <table class="table  table-striped">
     <thead>
       <tr>
-        <th scope="col">Nombre</th>
-        <th scope="col">Email</th>
-        <th scope="col">Mensaje</th>
+        <th scope="col">Codigo</th>
+        <th scope="col">Descripcion</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Seleccionar</th>
+        <th scope="col">Borrar</th>
       </tr>
     </thead>
     <tbody>
-        @for ( registro of array_registros; track $index) {
+        @for ( articulo of array_registros; track $index) {
       <tr>
-        <th scope="row">{{registro[0]}}</th>
-        <td>{{registro[1]}}</td>
-        <td>{{registro[2]}}</td>
+        <th scope="row">{{articulo.codigo}}</th>
+        <td>{{articulo.descripcion}}</td>
+        <td>{{articulo.precio}}</td>
+        <td>
+          <button type="button" class="col-sm-6 btn btn-primary" (click)="edit(articulo.codigo)">Editar</button>
+        </td>
+        <td>
+          <button type="button" class="col-sm-6 btn btn-danger" (click)="delete_data(articulo.codigo)">Borrar</button>
+        </td>
       </tr>
     }
   </table>

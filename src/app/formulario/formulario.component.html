@@ -1,30 +1,26 @@
 <form [formGroup]="form">
-    <h2>Formulario de contacto :</h2>
+    <h2>Articulos :</h2>
     <div class="form-group row">
-    <label class="col-sm-2 col-form-label" for="name">Nombre</label>
-    <input type="text" class="form-control col-sm-2" id="name" formControlName="name">
-    <small id="nameHelp" class="form-text text-danger text-danger col-sm-2">{{validation_name}}</small>
+    <label class="col-sm-2 col-form-label" for="codigo">Codigo</label>
+    <input type="text" class="form-control col-sm-2" id="codigo" formControlName="codigo">
+    <small id="codigoHelp" class="form-text text-danger text-danger col-sm-2">{{validation_codigo}}</small>
     </div>
 
     <div class="form-group row">
-      <label class="col-sm-2 col-form-label" for="email">Email</label>
-      <input type="text" class="form-control" id="email" formControlName="email">
-      <small id="emailHelp" class="form-text text-danger text-danger">{{validation_email}}</small>
+      <label class="col-sm-2 col-form-label" for="descripcion">Descripcion</label>
+      <input type="text" class="form-control" id="descripcion" formControlName="descripcion">
+      <small id="descripcionHelp" class="form-text text-danger text-danger">{{validation_descripcion}}</small>
       </div>
 
       <div class="form-group row">
-        <label class="col-sm-2 col-form-label" for="mensaje">Mensaje</label>
-        <input type="text" class="form-control" id="mensaje" formControlName="mensaje">
-        <small id="mensajeHelp" class="form-text text-danger">{{validation_mensaje}}</small>
+        <label class="col-sm-2 col-form-label" for="precio">precio</label>
+        <input type="text" class="form-control" id="precio" formControlName="precio">
+        <small id="precioHelp" class="form-text text-danger">{{validation_precio}}</small>
         </div> 
    
-        <div class="form-group row">
-          <label class="col-sm-2 col-form-label" for="suma">Suma {{num1}} + {{num2}}</label>
-          <input type="text" class="form-control" id="suma" formControlName="suma">
-          <small id="sumaHelp" class="form-text text-danger text-danger">{{validation_suma}}</small>
-          </div> 
-    <div class="form-group row mt-3">
-      <button type="button" class="col-sm-2 btn btn-primary" (click)="send_data()">Enviar</button>
+    <div class="form-group row mt-2">
+      <button type="button" class="col-sm-1 btn btn-sm btn-primary mx-1" (click)="send_data()">Guardar nuevo </button>
+      <button type="button" class="col-sm-1 btn btn-sm btn-warning" (click)="update_data()">Modificar</button>
     </div>
     
   </form>

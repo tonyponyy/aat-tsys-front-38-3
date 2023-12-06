@@ -1,8 +1,10 @@
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, formatPercent } from '@angular/common';
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter,OnInit } from '@angular/core';
 import { ListadoService } from '../listado/listado.service';
+import { Articulo } from "../models/articulo"
+
 
 @Component({
   selector: 'app-formulario',
@@ -11,20 +13,23 @@ import { ListadoService } from '../listado/listado.service';
   templateUrl: './formulario.component.html',
   styleUrl: './formulario.component.css',
 })
-export class FormularioComponent {
+export class FormularioComponent implements OnInit {
   constructor(public listadoService: ListadoService) {}
-  protected validation_name: string = '';
-  protected validation_email: string = '';
-  protected validation_mensaje: string = '';
-  protected validation_suma: string = '';
-  protected num1: number = Math.trunc(Math.random() * 9);
-  protected num2: number = Math.trunc(Math.random() * 9);
+  protected validation_codigo: string = '';
+  protected validation_descripcion: string = '';
+  protected validation_precio: string = '';
   protected form: FormGroup = new FormGroup({
-    name: new FormControl(''),
-    email: new FormControl(''),
-    mensaje: new FormControl(''),
-    suma: new FormControl(''),
+    codigo: new FormControl(''),
+    descripcion: new FormControl(''),
+    precio: new FormControl(''),
   });
+
+  
+  ngOnInit() {
+    this.listadoService.getEditarArticuloObservable().subscribe(articulo => {
+      this.edit(articulo);
+    });
+  }
 
   validate() {
     let validation = true;
@@ -32,39 +37,31 @@ export class FormularioComponent {
       let valor = this.form.get(controlName);
       let res = valor ? valor.value : '';
 
-      if (controlName == 'suma') {
-        if (parseInt(res) != this.num1 + this.num2) {
-          this.validation_suma = 'Esta suma es incorrecta';
-          validation = false;
-        } else {
-          this.validation_suma = '';
-        }
-      }
       if (res == '') {
         validation = false;
         switch (controlName) {
-          case 'name':
-            this.validation_name = 'Introduzca nombre';
+          case 'codigo':
+            this.validation_codigo = 'Introduzca codigo';
             break;
-          case 'email':
-            this.validation_email = 'Introduzca correo valido';
+          case 'descripcion':
+            this.validation_descripcion = 'Introduzca descripcion';
             break;
-          case 'mensaje':
-            this.validation_mensaje = 'Mensaje no puede estar vacío';
+          case 'precio':
+            this.validation_precio = 'Precio no puede estar vacío';
             break;
           default:
             break;
         }
       } else {
         switch (controlName) {
-          case 'name':
-            this.validation_name = '';
+          case 'codigo':
+            this.validation_codigo = '';
             break;
-          case 'email':
-            this.validation_email = '';
+          case 'descripcion':
+            this.validation_descripcion = '';
             break;
-          case 'mensaje':
-            this.validation_mensaje = '';
+          case 'precio':
+            this.validation_precio = '';
             break;
           default:
             break;
@@ -77,16 +74,31 @@ export class FormularioComponent {
   clean() {
  this.form.reset();
   }
+
+  edit(articulo :Articulo){
+    this.form.get("codigo")?.setValue(articulo.codigo);
+    this.form.get("descripcion")?.setValue(articulo.descripcion);
+    this.form.get("precio")?.setValue(articulo.precio);
+  }
   send_data() {
-    var tmp_arr: any = [];
     if (this.validate()) {
-      Object.keys(this.form.controls).forEach((controlName) => {
-        let valor = this.form.get(controlName);
-        let res = valor ? valor.value : '';
-        tmp_arr.push(res);
-      });
-      this.listadoService.add(tmp_arr);
+      var codigo  = this.form.get("codigo")?.value;
+      var descripcion  = this.form.get("descripcion")?.value;
+      var precio  = this.form.get("precio")?.value;
+      }
+      this.listadoService.add(new Articulo(codigo,descripcion,precio));
       this.clean();
     }
-  }
+
+    update_data() {
+      if (this.validate()) {
+        var codigo  = this.form.get("codigo")?.value;
+        var descripcion  = this.form.get("descripcion")?.value;
+        var precio  = this.form.get("precio")?.value;
+        console.log(new Articulo(codigo,descripcion,precio))
+        this.listadoService.update(new Articulo(codigo,descripcion,precio));
+        this.clean();
+      }
+      }
+
 }
