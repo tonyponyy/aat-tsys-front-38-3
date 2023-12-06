@@ -1,0 +1,30 @@
+<form [formGroup]="form">
+    <h2>Alta cliente :</h2>
+    <div class="form-group row">
+    <label class="col-sm-2 col-form-label" for="name">Nombre</label>
+    <input type="text" class="form-control col-sm-2" id="name" formControlName="name">
+    <small id="nameHelp" class="form-text text-danger text-danger col-sm-2">{{validation_name}}</small>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label" for="email">Email</label>
+      <input type="text" class="form-control" id="email" formControlName="email">
+      <small id="emailHelp" class="form-text text-danger text-danger">{{validation_email}}</small>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label" for="mensaje">Mensaje</label>
+        <input type="text" class="form-control" id="mensaje" formControlName="mensaje">
+        <small id="mensajeHelp" class="form-text text-danger">{{validation_mensaje}}</small>
+        </div> 
+   
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label" for="suma">Suma {{num1}} + {{num2}}</label>
+          <input type="text" class="form-control" id="suma" formControlName="suma">
+          <small id="sumaHelp" class="form-text text-danger text-danger">{{validation_suma}}</small>
+          </div> 
+    <div class="form-group row mt-3">
+      <button type="button" class="col-sm-2 btn btn-primary" (click)="send_data()">Enviar</button>
+    </div>
+    
+  </form>
